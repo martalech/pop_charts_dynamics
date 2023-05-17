@@ -26,12 +26,6 @@ class BillboardSpider(scrapy.Spider):
 
         hits_containers = response.css('div.o-chart-results-list-row-container')
         for hit_container in hits_containers:
-            c_titles = hit_container.css('h3.c-title::text').getall()
-            c_taglines = hit_container.css('p.c-tagline::text').getall()
-
-            has_songwriters = len([el for el in c_titles if "Songwriter(s)" in el]) > 0
-            has_producers = len([el for el in c_titles if "Producer(s)" in el]) > 0
-            has_label = len([el for el in c_titles if "Imprint/Promotion Label" in el]) > 0
 
             yield {
                 'first_day_of_the_week': date,
@@ -40,8 +34,5 @@ class BillboardSpider(scrapy.Spider):
                 'position': hit_container.css('span.c-label::text').get().strip(),
                 'last_week_position': hit_container.css('span.c-label::text').getall()[-3].strip(),
                 'peak_position': hit_container.css('span.c-label::text').getall()[-2].strip(),
-                'weeks_on_chart': hit_container.css('span.c-label::text').getall()[-1].strip(),
-                'songwriters': c_taglines[-1 - 1 * int(has_label) - 1 * int(has_producers)] if has_songwriters else "Not Listed",
-                'producers': c_taglines[-1 - 1 * int(has_label)] if has_producers else "Not Listed",
-                'promotion_label': c_taglines[-1] if has_label else "Not Listed",
+                'weeks_on_chart': hit_container.css('span.c-label::text').getall()[-1].strip()
             }
