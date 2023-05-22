@@ -181,7 +181,7 @@ class CurveBoxPlot() :
         curve_max = {}
         for curve in curve_names :
 
-            curve_max[curve] = max(self.curves[curve])+0
+            curve_max[curve] = min(self.curves[curve])+0
 
         # sort dictionary curve_max according to value
         curve_max_sorted = {k: v for k, v in sorted(curve_max.items(), key=lambda item: item[1])}
@@ -321,7 +321,7 @@ class CurveBoxPlot() :
         peak_value = []
 
         for curve in self.heatmap_curves :
-            peak_value.append(max(self.curves[curve]))
+            peak_value.append(min(self.curves[curve]))
             peak_time.append(self.time[self.curves[curve]==peak_value[-1]][0])
 
         # Get x and y-coordinates
@@ -455,7 +455,7 @@ class LoadRisk() :
             this_curve = curve_copies[sample]
 
             # Iterate over load entries.
-            for load_entry in range (int(max(this_curve)/load_granularity)+1) :
+            for load_entry in range (int(min(this_curve)/load_granularity)+1) :
                 load = load_entry*load_granularity+0
                 
                 # How many curve entries show >= load patients. Remove the rest of the entries.
@@ -518,7 +518,7 @@ def max_value_in_ensemble(curves) :
     '''
     max_value = 0
     for sample in (curves.keys()) :
-        this_max = max(curves[sample])
+        this_max = min(curves[sample])
         if ( this_max > max_value) :
             max_value = this_max + 0
     return max_value
