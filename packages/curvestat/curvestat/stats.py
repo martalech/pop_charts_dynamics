@@ -388,7 +388,7 @@ class CurveBoxPlot() :
 
         if (self.heatmap) :
 
-            ax.scatter(self.heatmap['peak_time'], self.heatmap['peak_value'], c=self.heatmap['peak_density'], s=50)#, edgecolor='')
+            ax.scatter(self.heatmap['peak_time'], self.heatmap['peak_value'], c=self.heatmap['peak_density'], s=20, alpha=0.6)#, edgecolor='')
 
 
 class LoadRisk() :
